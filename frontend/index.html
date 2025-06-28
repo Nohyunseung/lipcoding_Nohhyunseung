@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>멘토-멘티 매칭 플랫폼</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Demo Mode Banner -->
+    <div id="demo-banner" class="demo-banner" style="display: none;">
+        <div class="demo-banner-content">
+            <i class="fas fa-flask"></i>
+            <span>데모 모드로 실행 중입니다. 테스트 계정: mentor@test.com / mentee@test.com (비밀번호: 123456)</span>
+            <button onclick="hideDemoBanner()" class="demo-banner-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar" style="display: none;">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-handshake"></i>
+                <h2>멘토-멘티 매칭</h2>
+            </div>
+            <div class="nav-links">
+                <a href="#" data-page="profile" class="nav-link">
+                    <i class="fas fa-user"></i> 프로필
+                </a>
+                <a href="#" data-page="mentors" id="mentors-link" class="nav-link" style="display: none;">
+                    <i class="fas fa-users"></i> 멘토 목록
+                </a>
+                <a href="#" data-page="requests" class="nav-link">
+                    <i class="fas fa-envelope"></i> 요청 관리
+                </a>
+                <a href="#" id="logout-btn" class="nav-link logout">
+                    <i class="fas fa-sign-out-alt"></i> 로그아웃
+                </a>
+            </div>
+            <!-- 모바일 메뉴 토글 -->
+            <div class="mobile-menu-toggle" id="mobile-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Login Page -->
+        <div id="login-page" class="page active">
+            <div class="auth-wrapper">
+                <div class="auth-container">
+                    <div class="auth-header">
+                        <div class="logo-large">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h1>로그인</h1>
+                        <p>멘토링 플랫폼에 오신 것을 환영합니다</p>
+                    </div>
+                    
+                    <form id="login-form" class="auth-form">
+                        <!-- Demo Account Info -->
+                        <div class="demo-info">
+                            <h4><i class="fas fa-info-circle"></i> 🎯 테스트 계정으로 바로 체험하기</h4>
+                            <p class="demo-description">아래 계정을 클릭하면 자동으로 로그인 정보가 입력됩니다</p>
+                            <div class="demo-accounts">
+                                <div class="demo-account" onclick="fillLoginForm('mentor@test.com', '123456')">
+                                    <div class="account-info">
+                                        <span class="role-badge mentor">🎓 멘토</span>
+                                        <div class="credentials">
+                                            <strong>mentor@test.com</strong>
+                                            <span class="password">비밀번호: 123456</span>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-click click-icon"></i>
+                                </div>
+                                <div class="demo-account" onclick="fillLoginForm('mentee@test.com', '123456')">
+                                    <div class="account-info">
+                                        <span class="role-badge mentee">🌱 멘티</span>
+                                        <div class="credentials">
+                                            <strong>mentee@test.com</strong>
+                                            <span class="password">비밀번호: 123456</span>
+                                        </div>
+                                    </div>
+                                    <i class="fas fa-click click-icon"></i>
+                                </div>
+                            </div>
+                            <div class="demo-note">
+                                <i class="fas fa-lightbulb"></i>
+                                <small>멘토와 멘티 각각 다른 기능을 체험할 수 있습니다</small>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="email" name="email" placeholder="이메일 주소" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="password" name="password" placeholder="비밀번호" required>
+                            </div>
+                        </div>
+                        <button type="submit" id="login" class="btn btn-primary">
+                            <i class="fas fa-sign-in-alt"></i> 로그인
+                        </button>
+                    </form>
+                    
+                    <div class="auth-footer">
+                        <p>계정이 없으신가요? <a href="#" id="show-signup" class="link">회원가입</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Signup Page -->
+        <div id="signup-page" class="page">
+            <div class="auth-wrapper">
+                <div class="auth-container">
+                    <div class="auth-header">
+                        <div class="logo-large">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <h1>회원가입</h1>
+                        <p>새로운 멘토링 여정을 시작하세요</p>
+                    </div>
+                    
+                    <form id="signup-form" class="auth-form">
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="signup-email" name="email" placeholder="이메일 주소" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="signup-password" name="password" placeholder="비밀번호 (최소 6자)" minlength="6" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="signup-name" name="name" placeholder="이름" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <i class="fas fa-users"></i>
+                                <select id="signup-role" name="role" required>
+                                    <option value="">역할을 선택하세요</option>
+                                    <option value="mentor">🎓 멘토 (지식 공유자)</option>
+                                    <option value="mentee">🌱 멘티 (학습자)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" id="signup" class="btn btn-primary">
+                            <i class="fas fa-user-plus"></i> 가입하기
+                        </button>
+                    </form>
+                    
+                    <div class="auth-footer">
+                        <p>이미 계정이 있으신가요? <a href="#" id="show-login" class="link">로그인</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Page -->
+        <div id="profile-page" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1><i class="fas fa-user-edit"></i> 프로필 관리</h1>
+                    <p>자신을 어필하고 전문성을 보여주세요</p>
+                </div>
+                
+                <div class="profile-card">
+                    <form id="profile-form">
+                        <div class="profile-section">
+                            <div class="profile-image-section">
+                                <div class="image-upload-container" onclick="document.getElementById('profile').click()">
+                                    <img id="profile-photo" src="" alt="프로필 사진" class="profile-image">
+                                    <div class="image-overlay">
+                                        <i class="fas fa-camera"></i>
+                                        <span>사진 변경</span>
+                                    </div>
+                                </div>
+                                <input type="file" id="profile" accept="image/jpeg,image/png" name="image" style="display: none;">
+                                <div class="image-info">
+                                    <h3>프로필 사진</h3>
+                                    <p>JPG, PNG 파일 (최대 1MB)</p>
+                                </div>
+                            </div>
+                            
+                            <div class="profile-info">
+                                <div class="form-group">
+                                    <label for="profile-name">
+                                        <i class="fas fa-user"></i> 이름
+                                    </label>
+                                    <input type="text" id="profile-name" name="name" placeholder="이름을 입력하세요" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="profile-bio">
+                                        <i class="fas fa-quote-left"></i> 자기소개
+                                    </label>
+                                    <textarea id="profile-bio" name="bio" rows="4" placeholder="자신을 소개해주세요"></textarea>
+                                </div>
+                                
+                                <div id="skills-section" class="form-group" style="display: none;">
+                                    <label for="profile-skillsets">
+                                        <i class="fas fa-code"></i> 기술 스택
+                                    </label>
+                                    <input type="text" id="profile-skillsets" name="skills" placeholder="React, Vue, Node.js (쉼표로 구분)">
+                                    <div id="skills-display" class="skills-preview"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" id="save" class="btn btn-primary">
+                                <i class="fas fa-save"></i> 프로필 저장
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mentors Page (mentee only) -->
+        <div id="mentors-page" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1><i class="fas fa-search"></i> 멘토 찾기</h1>
+                    <p>당신에게 맞는 전문 멘토를 찾아보세요</p>
+                </div>
+                
+                <div class="search-controls">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search" placeholder="기술 스택으로 검색 (예: React, Vue, Node.js)">
+                    </div>
+                    
+                    <div class="sort-controls">
+                        <span><i class="fas fa-sort"></i> 정렬:</span>
+                        <label class="radio-label">
+                            <input type="radio" id="sort-name" name="sort" value="name">
+                            <span class="radio-custom"></span>
+                            <i class="fas fa-user"></i> 이름순
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" id="sort-skill" name="sort" value="skill">
+                            <span class="radio-custom"></span>
+                            <i class="fas fa-code"></i> 기술스택순
+                        </label>
+                    </div>
+                </div>
+                
+                <div id="mentors-list" class="mentors-grid">
+                    <!-- 멘토 카드들이 동적으로 로드됩니다 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Requests Page -->
+        <div id="requests-page" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1 id="requests-title"><i class="fas fa-envelope"></i> 요청 관리</h1>
+                    <p id="requests-subtitle">멘토링 요청을 관리하세요</p>
+                </div>
+                
+                <div id="requests-content" class="requests-container">
+                    <!-- 요청 내용이 동적으로 로드됩니다 -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Mentor Request Modal -->
+    <div id="request-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-paper-plane"></i> 멘토링 요청</h2>
+                <span class="close">&times;</span>
+            </div>
+            <form id="request-form">
+                <input type="hidden" id="mentor-id" name="mentorId">
+                <div class="form-group">
+                    <label for="request-message">
+                        <i class="fas fa-comment"></i> 요청 메시지
+                    </label>
+                    <textarea id="request-message" name="message" rows="5" placeholder="멘토에게 보낼 메시지를 작성해주세요. 구체적인 목표와 기대사항을 포함하면 더 좋습니다." required></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary cancel-btn">
+                        <i class="fas fa-times"></i> 취소
+                    </button>
+                    <button type="submit" id="request" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> 요청 보내기
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loading" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/profile.js"></script>
+    <script src="js/mentors.js"></script>
+    <script src="js/requests.js"></script>
+    <script src="js/debug.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
