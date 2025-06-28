@@ -62,7 +62,33 @@ git commit -m "🎉 Initial commit: 멘토-멘티 매칭 플랫폼 완성
 
 echo.
 echo 🌐 원격 저장소 연결 중...
-git remote add origin https://github.com/Nohyunseung/lipcoding_Nohhyunseung.git
+echo 📝 GitHub 사용자명을 확인하세요...
+echo.
+echo ⚠️  중요: GitHub 저장소 URL을 올바르게 설정해야 합니다!
+echo.
+echo 1️⃣ GitHub에서 새 저장소를 먼저 생성하세요:
+echo    - https://github.com/new
+echo    - Repository name: lipcoding_Nohhyunseung
+echo    - Public 또는 Private 선택
+echo    - README 생성하지 말고 빈 저장소로 생성
+echo.
+echo 2️⃣ 실제 GitHub 사용자명으로 URL을 수정하세요:
+echo    현재: https://github.com/Nohyunseung/lipcoding_Nohhyunseung.git
+echo    변경: https://github.com/YOUR_ACTUAL_USERNAME/lipcoding_Nohhyunseung.git
+echo.
+set /p username="GitHub 사용자명을 입력하세요 (예: Nohyunseung): "
+
+if "%username%"=="" (
+    echo [ERROR] 사용자명이 입력되지 않았습니다.
+    pause
+    exit /b 1
+)
+
+echo.
+echo 🔗 저장소 URL: https://github.com/%username%/lipcoding_Nohhyunseung.git
+echo.
+
+git remote add origin https://github.com/%username%/lipcoding_Nohhyunseung.git
 
 echo.
 echo 📤 GitHub에 업로드 중...

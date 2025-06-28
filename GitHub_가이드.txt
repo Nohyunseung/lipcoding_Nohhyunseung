@@ -1,0 +1,67 @@
+========================================
+   GitHub 저장소 생성 및 업로드 가이드
+========================================
+
+🚨 오류 해결: "repository not found"
+
+이 오류는 다음과 같은 이유로 발생합니다:
+1. GitHub 저장소가 아직 생성되지 않음
+2. 잘못된 사용자명 또는 저장소명
+3. 저장소가 Private이고 권한이 없음
+
+📋 단계별 해결 방법:
+
+1️⃣ GitHub 저장소 생성
+   🌐 https://github.com 접속
+   ➕ "New repository" 클릭
+   📝 Repository name: lipcoding_Nohhyunseung
+   🔓 Public 선택 (또는 Private)
+   ❌ "Add a README file" 체크 해제 (중요!)
+   ✅ "Create repository" 클릭
+
+2️⃣ 정확한 GitHub 사용자명 확인
+   👤 GitHub 프로필에서 실제 사용자명 확인
+   📋 예시: 
+      - 표시명: 노현승
+      - 실제 사용자명: Nohyunseung (또는 다른 영문명)
+
+3️⃣ 저장소 URL 형식
+   ✅ 올바른 형식: https://github.com/사용자명/저장소명.git
+   ❌ 잘못된 형식: https://github.com/노현승/저장소명.git
+
+4️⃣ 명령어로 수동 업로드 (추천)
+
+   PowerShell 또는 cmd를 열고:
+   
+   cd "c:\Users\shrlg\OneDrive\Desktop\입코딩"
+   
+   git init
+   git add .
+   git commit -m "🎉 Initial commit: 멘토-멘티 매칭 플랫폼"
+   
+   # 실제 사용자명으로 변경하세요!
+   git remote add origin https://github.com/YOUR_USERNAME/lipcoding_Nohhyunseung.git
+   
+   git branch -M main
+   git push -u origin main
+
+5️⃣ GitHub 로그인 인증
+
+   처음 push 시 GitHub 로그인이 필요할 수 있습니다:
+   - Personal Access Token 사용 권장
+   - GitHub Settings → Developer settings → Personal access tokens
+   - 토큰 생성 후 비밀번호 대신 사용
+
+========================================
+📞 추가 도움이 필요한 경우:
+
+1. GitHub 사용자명이 불확실한 경우:
+   https://github.com/settings/profile 에서 확인
+
+2. 저장소가 이미 존재하는 경우:
+   기존 저장소를 삭제하거나 다른 이름 사용
+
+3. 권한 문제가 있는 경우:
+   저장소가 Public인지 확인
+
+========================================
